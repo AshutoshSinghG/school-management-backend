@@ -1,0 +1,203 @@
+{
+    "info": {
+        "name": "School Management API",
+        "description": "API collection for School Management System — Add and List schools with proximity sorting.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000"
+        }
+    ],
+    "item": [
+        {
+            "name": "Health Check",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/health",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "health"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "200 OK",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n  \"success\": true,\n  \"status\": \"ok\",\n  \"timestamp\": \"2026-03-07T00:00:00.000Z\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Add School",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Delhi Public School\",\n  \"address\": \"Sector 24, Mathura Road, New Delhi\",\n  \"latitude\": 28.5672,\n  \"longitude\": 77.2410\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/addSchool",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "addSchool"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "201 Created",
+                    "status": "Created",
+                    "code": 201,
+                    "body": "{\n  \"success\": true,\n  \"message\": \"School added successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Delhi Public School\",\n    \"address\": \"Sector 24, Mathura Road, New Delhi\",\n    \"latitude\": 28.5672,\n    \"longitude\": 77.241,\n    \"created_at\": \"2026-03-07T00:00:00.000Z\",\n    \"updated_at\": \"2026-03-07T00:00:00.000Z\"\n  }\n}"
+                },
+                {
+                    "name": "400 Validation Error",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "body": "{\n  \"success\": false,\n  \"status\": \"fail\",\n  \"message\": \"School name is required, Address is required\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Add School — Kendriya Vidyalaya",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Kendriya Vidyalaya\",\n  \"address\": \"Andrews Ganj, New Delhi\",\n  \"latitude\": 28.5764,\n  \"longitude\": 77.2218\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/addSchool",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "addSchool"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Add School — Ryan International",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Ryan International School\",\n  \"address\": \"Sector 40, Gurugram, Haryana\",\n  \"latitude\": 28.4595,\n  \"longitude\": 77.0266\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/addSchool",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "addSchool"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "List Schools (from Delhi)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/listSchools?latitude=28.6139&longitude=77.2090",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "listSchools"
+                    ],
+                    "query": [
+                        {
+                            "key": "latitude",
+                            "value": "28.6139"
+                        },
+                        {
+                            "key": "longitude",
+                            "value": "77.2090"
+                        }
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "200 OK — Sorted by proximity",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n  \"success\": true,\n  \"count\": 3,\n  \"data\": [\n    {\n      \"id\": 2,\n      \"name\": \"Kendriya Vidyalaya\",\n      \"address\": \"Andrews Ganj, New Delhi\",\n      \"latitude\": 28.5764,\n      \"longitude\": 77.2218,\n      \"distance_km\": 4.31\n    },\n    {\n      \"id\": 1,\n      \"name\": \"Delhi Public School\",\n      \"address\": \"Sector 24, Mathura Road, New Delhi\",\n      \"latitude\": 28.5672,\n      \"longitude\": 77.241,\n      \"distance_km\": 5.91\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Ryan International School\",\n      \"address\": \"Sector 40, Gurugram, Haryana\",\n      \"latitude\": 28.4595,\n      \"longitude\": 77.0266,\n      \"distance_km\": 24.05\n    }\n  ]\n}"
+                },
+                {
+                    "name": "400 Missing Params",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "body": "{\n  \"success\": false,\n  \"status\": \"fail\",\n  \"message\": \"Latitude query parameter is required, Longitude query parameter is required\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "List Schools (from Mumbai)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/listSchools?latitude=19.0760&longitude=72.8777",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "listSchools"
+                    ],
+                    "query": [
+                        {
+                            "key": "latitude",
+                            "value": "19.0760"
+                        },
+                        {
+                            "key": "longitude",
+                            "value": "72.8777"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}
