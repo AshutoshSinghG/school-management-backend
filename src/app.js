@@ -44,7 +44,7 @@ if (env.nodeEnv === 'development') {
 app.use('/api', routes);
 
 // 404 catch
-app.all('*', (req, _res, next) => {
+app.use((req, _res, next) => {
     next(new AppError(`Route ${req.originalUrl} not found`, 404));
 });
 
